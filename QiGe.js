@@ -10,7 +10,10 @@ var QiGe = (function(){
         this.inner = null;
         this.qizi = null;
         this.coords = null;
-        this.numbersOfQizi = 0;
+        this.numbersOfQiziH = 0;
+        this.numbersOfQiziS = 0;
+        this.numbersOfQiziLT =0;
+        this.numbersOfQiziRT = 0;
 
         this.init = function(){
             this.inner = $('<span class="inner">').css({
@@ -61,6 +64,24 @@ var QiGe = (function(){
             }else if(this._checkRight()){
                 alert('ok');
             }
+            //竖向
+            if(this._checkTop()){
+                alert('top ok');
+            }else if(this._checkBottom()){
+                alert('bottom ok');
+            }
+            //'\'向
+            if(this._checkLeftTop()){
+                alert('left top ok');
+            }else if(this._checkRightBottom()){
+                alert('right bottom ok');
+            }
+            //'/'向
+            if(this._checkRightTop()){
+                alert('right top ok');
+            }else if(this._checkLeftBottom()){
+                alert('left bottom ok');
+            }
         };
 
         this._checkLeft = function(){
@@ -68,16 +89,22 @@ var QiGe = (function(){
             if(this.coords){
                 for(var i = -1; i > -5; i--){
                     var qiGe = QiPanSingleton.findQiGe(this.coords.x, this.coords.y + i);
-                    if(!qiGe || !qiGe.qizi){
-                        if(this.numbersOfQizi < 4){
-                            this._checkRight();
-                        }
-                        return false;
+                    if(this.numbersOfQiziH >= 4){
+                        return true;
                     }else {
-                        this.numbersOfQizi++;
+                        if(!qiGe || !qiGe.qizi){
+                            return false;
+                        }else {
+                            this.numbersOfQiziH++;
+                        }
                     }
                 }
-                return this.numbersOfQizi >= 4;
+                if(this.numbersOfQiziH >= 4){
+                    this.numbersOfQiziH = 0;
+                    return true;
+                }else {
+                    return false;
+                }
             }
         };
 
@@ -86,13 +113,173 @@ var QiGe = (function(){
             if(this.coords){
                 for(var i = 1; i < 5; i++){
                     var qiGe = QiPanSingleton.findQiGe(this.coords.x, this.coords.y + i);
-                    if(!qiGe || !qiGe.qizi){
-                        return false;
+                    if(this.numbersOfQiziH >= 4){
+                        this.numbersOfQiziH = 0;
+                        return true;
                     }else {
-                        this.numbersOfQizi++;
+                        if (!qiGe || !qiGe.qizi) {
+                            return false;
+                        } else {
+                            this.numbersOfQiziH++;
+                        }
                     }
                 }
-                return this.numbersOfQizi >= 4;
+                if(this.numbersOfQiziH >= 4){
+                    this.numbersOfQiziH = 0;
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+        };
+
+        this._checkTop = function(){
+            var QiPanSingleton = QiPan.getInstance();
+            if(this.coords){
+                for(var i = -1; i > -5; i--){
+                    var qiGe = QiPanSingleton.findQiGe(this.coords.x + i, this.coords.y);
+                    if(this.numbersOfQiziS >= 4){
+                        this.numbersOfQiziS = 0;
+                        return true;
+                    }else {
+                        if(!qiGe || !qiGe.qizi){
+                            return false;
+                        }else {
+                            this.numbersOfQiziS++;
+                        }
+                    }
+                }
+                if(this.numbersOfQiziS >= 4){
+                    this.numbersOfQiziS = 0;
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+        };
+
+        this._checkBottom = function(){
+            var QiPanSingleton = QiPan.getInstance();
+            if(this.coords){
+                for(var i = 1; i < 5; i++){
+                    var qiGe = QiPanSingleton.findQiGe(this.coords.x + i, this.coords.y);
+                    if(this.numbersOfQiziS >= 4){
+                        this.numbersOfQiziS = 0;
+                        return true;
+                    }else {
+                        if (!qiGe || !qiGe.qizi) {
+                            return false;
+                        } else {
+                            this.numbersOfQiziS++;
+                        }
+                    }
+                }
+                if(this.numbersOfQiziS >= 4){
+                    this.numbersOfQiziS = 0;
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+        };
+
+        this._checkLeftTop = function(){
+            var QiPanSingleton = QiPan.getInstance();
+            if(this.coords){
+                for(var i = -1; i > -5; i--){
+                    var qiGe = QiPanSingleton.findQiGe(this.coords.x + i, this.coords.y + i);
+                    if(this.numbersOfQiziLT >= 4){
+                        this.numbersOfQiziLT = 0;
+                        return true;
+                    }else {
+                        if(!qiGe || !qiGe.qizi){
+                            return false;
+                        }else {
+                            this.numbersOfQiziLT++;
+                        }
+                    }
+                }
+                if(this.numbersOfQiziLT >= 4){
+                    this.numbersOfQiziLT = 0;
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+        };
+
+        this._checkRightBottom = function(){
+            var QiPanSingleton = QiPan.getInstance();
+            if(this.coords){
+                for(var i = 1; i < 5; i++){
+                    var qiGe = QiPanSingleton.findQiGe(this.coords.x + i, this.coords.y + i);
+                    if(this.numbersOfQiziLT >= 4){
+                        this.numbersOfQiziLT = 0;
+                        return true;
+                    }else {
+                        if (!qiGe || !qiGe.qizi) {
+                            return false;
+                        } else {
+                            this.numbersOfQiziLT++;
+                        }
+                    }
+                }
+                if(this.numbersOfQiziLT >= 4){
+                    this.numbersOfQiziLT = 0;
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+        };
+
+        this._checkRightTop = function(){
+            var QiPanSingleton = QiPan.getInstance();
+            if(this.coords){
+                for(var i = -1; i > -5; i--){
+                    var qiGe = QiPanSingleton.findQiGe(this.coords.x - i, this.coords.y + i);
+                    if(this.numbersOfQiziRT >= 4){
+                        this.numbersOfQiziRT = 0;
+                        return true;
+                    }else {
+                        if(!qiGe || !qiGe.qizi){
+                            return false;
+                        }else {
+                            this.numbersOfQiziRT++;
+                        }
+                    }
+                }
+                if(this.numbersOfQiziRT >= 4){
+                    this.numbersOfQiziRT = 0;
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+        };
+
+        this._checkLeftBottom = function(){
+            var QiPanSingleton = QiPan.getInstance();
+            if(this.coords){
+                for(var i = 1; i < 5; i++){
+                    var qiGe = QiPanSingleton.findQiGe(this.coords.x - i, this.coords.y + i);
+                    if(this.numbersOfQiziRT >= 4){
+                        this.numbersOfQiziRT = 0;
+                        return true;
+                    }else {
+                        if (!qiGe || !qiGe.qizi) {
+                            return false;
+                        } else {
+                            this.numbersOfQiziRT++;
+                        }
+                    }
+                }
+                if(this.numbersOfQiziRT >= 4){
+                    this.numbersOfQiziRT = 0;
+                    return true;
+                }else {
+                    return false;
+                }
             }
         };
     }
